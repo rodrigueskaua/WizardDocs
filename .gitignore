@@ -1,0 +1,17 @@
+# Ignora arquivos do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Ignora arquivos de ambiente
+.env
+.venv/
+venv/
+env/
+
+chroma_data/
