@@ -1,23 +1,16 @@
+version: "3.8"
+
 services:
-  app:
-    build: .
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
     ports:
-      - "8000:8000"
+      - "${APP_PORT}:8000"
     volumes:
-      - .:/app
-    environment:
-      - CHROMA_HOST=chroma
-    depends_on:
-      - chroma
-
-  chroma:
-    image: chromadb/chroma
-    ports:
-      - "8001:8000"
-    volumes:
-      - chroma_data:/chroma
-    environment:
-      - CHROMA_SERVER_HOST=0.0.0.0
-
-volumes:
-  chroma_data:
+      - ./backend/app:/app
+      - ./backend/data/chromadb:/data/chromadb
+    env_file:
+      - ./backend/.env
+    restart: always
