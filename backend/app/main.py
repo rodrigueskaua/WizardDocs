@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(
+    title="WizardDocs API",
+    description="Descrição da minha API",
+    version="0.1.0"
+)
 
 @app.get("/")
-def read_root():
-  return {"message": "API está funcionando!"}
+async def root():
+    return {"message": "Hello World"}
