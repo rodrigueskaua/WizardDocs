@@ -1,10 +1,9 @@
-from chromadb.config import Settings
-from chromadb import Client
+import chromadb
+import os
 
-client = Client(Settings(
-  chroma_db_impl="duckdb+parquet",
-  persist_directory="/data/chromadb"
-))
+CHROMA_HOST = os.getenv("CHROMADB_HOST", "http://chromadb:8000")
+
+client = chromadb.HttpClient(host=CHROMA_HOST)
 
 def store_embeddings(collection_name, texts, embeddings):
   """
@@ -12,11 +11,11 @@ def store_embeddings(collection_name, texts, embeddings):
   """
   collection = client.get_or_create_collection(name=collection_name)
   collection.add(
-    documents=texts,
-    embeddings=embeddings,
-    ids=[str(i) for i in range(len(texts))]
+      documents=texts,
+      embeddings=embeddings,
+      ids=[str(i) for i in range(len(texts))]
   )
-  
+
 def retrieve_relevant_chunks(collection_name, query_embedding, top_k=5):
   """
   Recupera os chunks mais relevantes do ChromaDB com base no embedding da consulta.
