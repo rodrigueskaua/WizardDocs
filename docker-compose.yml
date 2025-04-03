@@ -7,10 +7,20 @@ services:
       dockerfile: Dockerfile
     container_name: backend
     ports:
-      - "${APP_PORT}:8000"
+      - "8001:8000"
     volumes:
       - ./backend/app:/app
-      - ./backend/data/chromadb:/data/chromadb
     env_file:
       - ./backend/.env
+    restart: always
+    depends_on:
+      - chromadb
+
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/data/chromadb:/data/chromadb
     restart: always
