@@ -1,17 +1,13 @@
-from chromadb import Client
-from chromadb.config import Settings
+import chromadb
 
-client = Client(Settings(
-  chroma_db_impl="duckdb+parquet",
-  persist_directory="./chroma_db"
-))
+client = chromadb.PersistentClient(path="./chroma_db")
 
 def store_embeddings(collection_name, texts, embeddings):
   collection = client.get_or_create_collection(name=collection_name)
   collection.add(
-      documents=texts,
-      embeddings=embeddings,
-      ids=[str(i) for i in range(len(texts))]
+    documents=texts,
+    embeddings=embeddings,
+    ids=[str(i) for i in range(len(texts))]
   )
 
 def retrieve_relevant_chunks(collection_name, query_embedding, top_k=5):
