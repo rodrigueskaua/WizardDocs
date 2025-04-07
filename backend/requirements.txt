@@ -6,3 +6,4 @@ sentence-transformers==2.2.2
 transformers==4.31.0
 huggingface_hub==0.14.1
 chromadb
+python-multipart
