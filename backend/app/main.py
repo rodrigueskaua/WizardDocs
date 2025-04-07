@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from api.pdf import router as pdf_router
+from api.query import router as query_router
 
 app = FastAPI(
     title="WizardDocs API",
@@ -12,3 +13,4 @@ async def root():
     return {"message": "Hello World"}
     
 app.include_router(pdf_router, prefix="/api", tags=["PDF"])
+app.include_router(query_router, prefix="/api", tags=["QUERY"])
