@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, HTTPException
-from app.services.pdf_service import extract_text_from_pdf, split_text_into_chunks
-from app.services.embedding_service import generate_embeddings
-from app.database.chromadb import store_embeddings
+from services.pdf_service import extract_text_from_pdf, split_text_into_chunks
+from services.embedding_service import generate_embeddings
+from database.chromadb import store_embeddings
 
 router = APIRouter()
 
