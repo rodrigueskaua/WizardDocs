@@ -16,4 +16,4 @@ def retrieve_relevant_chunks(collection_name, query_embedding, top_k=5):
     query_embeddings=[query_embedding],
     n_results=top_k
   )
-  return results["documents"]
+  return list(zip(results["documents"][0], results["distances"][0]))
