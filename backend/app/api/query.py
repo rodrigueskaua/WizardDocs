@@ -14,12 +14,6 @@ async def query_pdf_data(body: dict = Body(...)):
 
   try:
     result = query_knowledge_base(question, provider=provider, top_k=top_k)
-    return {
-      "question": question,
-      "top_k": top_k,
-      "provider": provider,
-      "resposta": result["resposta"],
-      "fonte": result["fonte"]
-    }
+    return result
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Erro na consulta: {str(e)}")
