@@ -8,13 +8,29 @@ def query_knowledge_base(question: str, provider: str = "local", top_k: int = 5)
   if provider == "local":
     relevant_chunks = retrieve_relevant_chunks("pdf_data", query_embedding, top_k=top_k)
     context = "\n".join([chunk for chunk, _ in relevant_chunks])
-    return {"resposta": context, "fonte": "ChromaDB"}
+    return {
+      "resposta": context,
+      "fonte": "ChromaDB",
+      "top_k": top_k,
+      "chunks": [
+        {"text": chunk, "distance": round(distance, 4)}
+        for chunk, distance in relevant_chunks
+      ]
+    }
 
   elif provider == "openai":
     relevant_chunks = retrieve_relevant_chunks("pdf_data", query_embedding, top_k=top_k)
     context = "\n".join([chunk for chunk, _ in relevant_chunks])
     resposta = ask_openai(question, context)
-    return {"resposta": resposta, "fonte": "OpenAI"}
+    return {
+      "resposta": resposta,
+      "fonte": "OpenAI",
+      "top_k": top_k,
+      "chunks": [
+        {"text": chunk, "distance": round(distance, 4)}
+        for chunk, distance in relevant_chunks
+      ]
+    }
 
   else:
     raise ValueError("Provedor inválido. Use 'local' ou 'openai'.")
