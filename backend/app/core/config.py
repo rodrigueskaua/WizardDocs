@@ -8,5 +8,6 @@ class Settings:
     self.app_port = int(os.getenv("APP_PORT", 8000))
     self.chromadb_dir = os.getenv("CHROMADB_DIR", "/data/chromadb")
     self.openai_api_key = os.getenv("OPENAI_API_KEY", "")
+    self.mongo_uri = os.getenv("MONGO_URI", "")
 
 settings = Settings()
