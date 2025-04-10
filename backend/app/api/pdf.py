@@ -1,4 +1,5 @@
-from fastapi import APIRouter, UploadFile, HTTPException
+from fastapi import APIRouter, UploadFile, HTTPException, status
+from fastapi.responses import JSONResponse
 from services.pdf_service import extract_text_from_pdf, split_text_into_chunks
 from services.embedding_service import generate_embeddings_batch
 from services.ai_service import generate_summary
@@ -27,11 +28,14 @@ async def upload_pdf(file: UploadFile):
 
     summary = await generate_summary(chunks, num_chunks=5)
     await save_pdf_summary(file.filename, summary)
-    
-    return {
-      "message": "PDF processado e armazenado com sucesso!",
-      "total_chunks": len(chunks)
-    }
+   
+    return JSONResponse(
+      status_code=status.HTTP_201_CREATED,
+      content={
+        "message": "PDF processado e armazenado com sucesso!",
+        "total_chunks": len(chunks)
+      }
+    )
 
   except Exception as e:
     raise HTTPException(status_code=500, detail=f"Erro ao processar o PDF: {str(e)}")
