@@ -16,8 +16,8 @@ def query_knowledge_base(question: str, provider: str = "local", top_k: int = 5)
     
     return {
       "question": question,
-      "resposta": context,
-      "fonte": "ChromaDB",
+      "answer": context,
+      "source": "ChromaDB",
       "top_k": top_k,
       "chunks": clean_chunks
     }
@@ -31,11 +31,11 @@ def query_knowledge_base(question: str, provider: str = "local", top_k: int = 5)
     ]
     context = " ".join(chunk["text"] for chunk in clean_chunks)
     
-    resposta = ask_openai(question, context)
+    result = ask_openai(question, context)
     return {
       "question": question,
-      "resposta": resposta,
-      "fonte": "OpenAI",
+      "answer": result,
+      "source": "OpenAI",
       "top_k": top_k,
       "chunks": clean_chunks
     }
