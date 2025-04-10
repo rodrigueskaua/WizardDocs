@@ -33,3 +33,25 @@ def ask_openai(question: str, context: str) -> str:
   max_tokens=1000)
 
   return response.choices[0].message.content.strip()
+
+def generate_summary(text: str) -> str:
+  response = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+      {
+        "role": "system",
+        "content": (
+          "Você é um assistente especializado em interpretar documentos PDF e gerar resumos objetivos e claros. "
+          "Escreva um resumo conciso que capture os principais tópicos e a intenção geral do documento."
+        )
+      },
+      {
+        "role": "user",
+        "content": f"Gere um resumo geral do seguinte conteúdo:\n\n{text}"
+      }
+    ],
+    temperature=0.5,
+    max_tokens=500
+  )
+
+  return response.choices[0].message.content.strip()
