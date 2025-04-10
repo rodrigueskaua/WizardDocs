@@ -8,3 +8,4 @@ huggingface_hub==0.14.1
 chromadb
 python-multipart
 openai
+motor
