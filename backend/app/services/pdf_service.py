@@ -3,12 +3,15 @@ import re
 
 def extract_text_from_pdf(pdf_file) -> str:
   reader = PdfReader(pdf_file)
-  full_text = ""
+  full_text = []
+
   for page in reader.pages:
     page_text = page.extract_text()
     if page_text:
-      full_text += page_text + "\n"
-  return full_text.strip()
+      full_text.append(page_text)
+
+  return "\n".join(full_text).strip()
+
   
 def split_text_into_chunks(text: str, chunk_size: int = 500, overlap: int = 50) -> list[str]:
   words = re.split(r'(\s+)', text)  # Mantém os espaços entre as palavras
