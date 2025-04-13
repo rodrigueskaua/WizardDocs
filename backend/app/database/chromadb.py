@@ -1,3 +1,4 @@
+from typing import List, Tuple
 import chromadb
 
 client = chromadb.PersistentClient(path="./chroma_db")
@@ -10,10 +11,19 @@ def store_embeddings(collection_name, texts, embeddings):
     ids=[str(i) for i in range(len(texts))]
   )
 
-def retrieve_relevant_chunks(collection_name, query_embedding, top_k=5):
+def retrieve_relevant_chunks(
+  collection_name: str,
+  query_embedding: List[float],
+  top_k: int = 5
+) -> List[Tuple[str, float]]:
   collection = client.get_collection(name=collection_name)
+
   results = collection.query(
     query_embeddings=[query_embedding],
     n_results=top_k
   )
-  return list(zip(results["documents"][0], results["distances"][0]))
+
+  documents = results.get("documents", [[]])[0]
+  distances = results.get("distances", [[]])[0]
+
+  return list(zip(documents, distances))
