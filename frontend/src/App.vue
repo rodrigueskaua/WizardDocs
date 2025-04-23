@@ -1,15 +1,11 @@
 <template>
-  <div class="min-vh-100 d-flex flex-column bg-light text-dark">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
-      <a class="navbar-brand" href="#">Wizard Docs</a>
-    </nav>
-
-    <main class="container flex-grow-1 py-4">
-      <router-view />
-    </main>
-
-    <footer class="bg-primary text-white text-center py-3 mt-auto">
-      &copy; 2025 Wizard Docs. Todos os direitos reservados.
-    </footer>
+  <div class="container-fluid bg-dark text-white m-0 p-0 min-vh-100">
+    <div class="row g-0 h-100">
+      <div class="col-12 d-flex justify-content-center align-items-start p-0 h-100">
+        <div class="w-100" style="max-width: 1920px;">
+          <router-view />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
